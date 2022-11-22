@@ -1,0 +1,59 @@
+---
+title: "Árvores do INMA - versão TESTE"
+date: "`r format(Sys.time(), '%Y-%m-%d')`"
+output: flexdashboard::flex_dashboard
+self_contained: yes
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+### Chart 2 {.no-mobile}
+
+```{r  include=FALSE, message=FALSE, warning=FALSE}
+library(tidyverse)
+library(leaflet)
+library(leaflet.extras)
+library(rgdal)
+library(sf)
+library(leafgl)
+library(openxlsx)
+```
+
+```{r  include=FALSE, message=FALSE, warning=FALSE}
+Arvores<-read.xlsx("Coord_Test.xlsx",sheet="Planilha1")
+Arvores<-Arvores%>%mutate(Lat=as.numeric(Lat),Long=as.numeric(Long))
+Arvores
+```
+
+
+
+
+```{r echo=FALSE}
+map <- leaflet(Arvores)%>%
+  addProviderTiles(providers$CartoDB.Positron,options = tileOptions(maxZoom = 50))%>%
+    addTiles(options = tileOptions(maxZoom = 50))%>%
+#addTiles(tileOptions(minZoom = 5, maxZoom = 12))%>%
+ addCircleMarkers(lng = ~Long, lat = ~Lat,
+                        popup = ~paste0(
+	"<br/><strong>ID:</strong>:",ID,
+	"<br/><strong>Nome popular:</strong>",Nome.popular,
+	"<br/><strong>Nome científico:</strong>",Nome.cientifico,
+	"<br/><strong>Lat:</strong>",Lat,
+	"<br/><strong>Long:</strong>",Long))
+
+map <- addControlGPS(map, options = gpsOptions(position = "topleft", activate = TRUE, 
+                                              autoCenter = TRUE, maxZoom = 25, 
+                                             setView = FALSE))
+#activateGPS(map)
+map
+```
+
+
+
+
+
+
+
+
