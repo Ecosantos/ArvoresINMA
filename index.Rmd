@@ -43,7 +43,7 @@ map <- leaflet(Arvores, width="100%")%>%
 	"<br/><strong>Nome popular:</strong>",Nome.popular,
 	"<br/><strong>Nome científico:</strong>",Nome.cientifico,
 #	paste0("<img src='https://www.r-project.org/logo/Rlogo.png", "' />")))  #AQUI FUNCIONA!
-	paste0("<img src=",paste0("Fotos/",~ID), " />")))
+paste0("<img src='https://github.com/Ecosantos/ArvoresINMA/blob/29d7b1f7b66c3a37fe51f7593d3abe9431468baa/Fotos/1.png", "' />")))
 
 map <- addControlGPS(map, options = gpsOptions(position = "topleft", activate = TRUE, 
                                               autoCenter = TRUE, maxZoom = 25, 
