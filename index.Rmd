@@ -25,31 +25,9 @@ library(openxlsx)
 Arvores<-read.xlsx("Coord_Test.xlsx",sheet="Planilha1")
 Arvores<-Arvores%>%mutate(Lat=as.numeric(Lat),Long=as.numeric(Long))
 Arvores
-```
-
-
-### Chart 1 {.mobile}
-
-```{r echo=FALSE}
-map <- leaflet(Arvores, width="100%")%>%
-  addProviderTiles(providers$CartoDB.Positron,options = tileOptions(maxZoom = 50))%>%
-    addTiles(options = tileOptions(maxZoom = 50))%>%
-#addTiles(tileOptions(minZoom = 5, maxZoom = 12))%>%
- addCircleMarkers(lng = ~Long, lat = ~Lat,
-                        popup = ~paste0(
-	"<br/><strong>ID:</strong>:",ID,
-	"<br/><strong>Nome popular:</strong>",Nome.popular,
-	"<br/><strong>Nome científico:</strong>",Nome.cientifico,
-	"<br/><strong>Lat:</strong>",Lat,
-	"<br/><strong>Long:</strong>",Long))
-
-map <- addControlGPS(map, options = gpsOptions(position = "topleft", activate = TRUE, 
-                                              autoCenter = TRUE, maxZoom = 25, 
-                                             setView = FALSE))
-#activateGPS(map)
-map
 
 ```
+
 
 
 ### Chart 1 {.no-mobile}
@@ -64,19 +42,40 @@ map <- leaflet(Arvores, width="100%")%>%
 	"<br/><strong>ID:</strong>:",ID,
 	"<br/><strong>Nome popular:</strong>",Nome.popular,
 	"<br/><strong>Nome científico:</strong>",Nome.cientifico,
-	"<br/><strong>Lat:</strong>",Lat,
-	"<br/><strong>Long:</strong>",Long))
+#	paste0("<img src='https://www.r-project.org/logo/Rlogo.png", "' />")))  #AQUI FUNCIONA!
+	paste0("<img src=",paste0("Fotos/",~ID), " />")))
 
 map <- addControlGPS(map, options = gpsOptions(position = "topleft", activate = TRUE, 
                                               autoCenter = TRUE, maxZoom = 25, 
                                              setView = FALSE))
-#activateGPS(map)
-map
+activateGPS(map)
 
 ```
 
+```{r eval=FALSE, include=FALSE}
+#LIXO
+map <- leaflet(Arvores, width="100%")%>%
+  addProviderTiles(providers$CartoDB.Positron,options = tileOptions(maxZoom = 50))%>%
+    addTiles(options = tileOptions(maxZoom = 50))%>%
+#addTiles(tileOptions(minZoom = 5, maxZoom = 12))%>%
+ addCircleMarkers(lng = ~Long, lat = ~Lat,
+                        popup = ~paste0(
+	"<br/><strong>ID:</strong>:",
+paste0("<img src='https://www.r-project.org/logo/Rlogo.png", "' />")))
 
+map <- addControlGPS(map, options = gpsOptions(position = "topleft", activate = TRUE, 
+                                              autoCenter = TRUE, maxZoom = 25, 
+                                             setView = FALSE))
+activateGPS(map)
 
+```
+
+### Chart 1 {.mobile}
+
+```{r echo=FALSE}
+#BASTA COPIAR O CÓDIGO ACIMA. POR ALGUM MOTIVO É NECESSÀRIO TER DOIS CHUNKS DE CÓDITO. UM APENAS PARA MOBILE {.mobile} E OUTRO APENAS PARA NÃO MOBILE {.no-mobile}
+
+```
 
 
 
